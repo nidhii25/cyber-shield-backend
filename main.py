@@ -27,3 +27,7 @@ os.makedirs(STATIC_DIR, exist_ok=True)
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 app.include_router(eda_router)
+
+@app.get("/")
+def read_root():
+    return {"message": "Backend is running successfully!"}
