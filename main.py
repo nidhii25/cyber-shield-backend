@@ -14,6 +14,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 # 📦 Include routers
@@ -21,10 +22,10 @@ app.include_router(phishing_router)
 
 
 # ✅ Make sure the EDA static directory matches what's used in eda_router.py
-STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
-os.makedirs(STATIC_DIR, exist_ok=True)
+STATIC_ROOT = os.path.join(os.path.dirname(__file__), "static")
+os.makedirs(STATIC_ROOT, exist_ok=True)
+app.mount("/static", StaticFiles(directory=STATIC_ROOT), name="static")
 
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 app.include_router(eda_router)
 
